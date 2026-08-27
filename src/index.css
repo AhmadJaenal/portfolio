@@ -1,0 +1,47 @@
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource-variable/bricolage-grotesque";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  :root.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-white text-slate-700 font-sans antialiased transition-colors duration-300;
+  }
+
+  .dark body {
+    @apply bg-[#050505] text-slate-300;
+  }
+
+  img {
+    content-visibility: auto;
+  }
+}
+
+@layer components {
+  /* Shared card surface used across sections, theme-aware. */
+  .surface-card {
+    @apply rounded-3xl border bg-white border-slate-200 shadow-xl transition-colors;
+  }
+
+  .dark .surface-card {
+    @apply bg-[#0a0a0a] border-[#262626] shadow-2xl;
+  }
+
+  .surface-inset {
+    @apply rounded-2xl border bg-slate-50 border-slate-200;
+  }
+
+  .dark .surface-inset {
+    @apply bg-[#121212] border-[#262626];
+  }
+}
