@@ -1,11 +1,11 @@
 import { experiences } from "@data/experiences.js";
 
-export default function ExperienceTimeline() {
+export default function ExperienceTimeline({ id, className = "" }) {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-24">
-      <div className="mb-20 text-center">
+    <section id={id} className={`mx-auto max-w-6xl px-2 py-16 md:px-6 ${className}`}>
+      <div className="mb-16 text-center">
         <p className="text-sm uppercase tracking-[0.35em] text-accent">
-          About Me
+          Experience
         </p>
         <h2 className="mt-4 text-4xl font-bold text-slate-900 md:text-5xl dark:text-white">
           Professional Journey

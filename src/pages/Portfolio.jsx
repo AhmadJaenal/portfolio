@@ -41,7 +41,7 @@ export default function Portfolio() {
         ))}
       </div>
 
-      <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-20 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10">
         {filtered.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}

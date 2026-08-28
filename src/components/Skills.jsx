@@ -32,9 +32,9 @@ function CapabilityCard({ title, category, description, Icon }) {
   );
 }
 
-export default function Skills({ showProficiency = false, className = "" }) {
+export default function Skills({ id, showProficiency = false, className = "" }) {
   return (
-    <section className={className}>
+    <section id={id} className={className}>
       <SectionHead
         eyebrow="Skills"
         title={

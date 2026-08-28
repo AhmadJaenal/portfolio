@@ -1,6 +1,7 @@
-# Portfolio — Flutter & Mobile Developer (React)
+# Ahmad Jaenal Aripin — Portfolio (React)
 
-Personal portfolio website migrated from Astro to **React + Vite + Tailwind CSS**.
+Personal portfolio website for **Ahmad Jaenal Aripin**, a Flutter & Mobile
+Developer. Migrated from Astro to **React + Vite + Tailwind CSS**.
 The original Astroship style and theme (Bricolage Grotesque / Inter type, the
 `#FE7743` orange accent, and the dark card aesthetic) are preserved, now with a
 full light/dark mode.
@@ -17,17 +18,17 @@ full light/dark mode.
 
 | Route             | Page            | Notes                                                        |
 | ----------------- | --------------- | ----------------------------------------------------------- |
-| `/`               | Landing page    | Hero, Skills, featured projects, CTA                        |
-| `/about`          | About page      | Bio, stats, experience timeline, skills + proficiency bars  |
+| `/`               | Landing page    | Everything on one page: hero carousel, about, education, experience timeline, skills, featured projects, certificates, CTA. Navbar/footer links scroll to `#about`, `#experience`, `#skills`, `#certificates` |
+| `/about`          | Redirect        | Redirects to `/#about`                                      |
 | `/portfolio`      | Portfolio page  | Project grid with category filter                           |
-| `/portfolio/:id`  | Project detail  | Cover, meta, tasks, implementations, tech, links            |
+| `/portfolio/:id`  | Project detail  | Cover/screenshot gallery, meta, tasks, implementations, tech, links |
 | `/contact`        | Contact page    | Contact form (Web3Forms) + contact details                  |
 | `*`               | 404             | Not found                                                   |
 
 - **Dark mode** — toggle in the navbar, persisted to `localStorage`, respects
   `prefers-color-scheme`, and applied before first paint (no flash).
 - **Skills** — reusable `<Skills />` section (capability cards + tech stack,
-  optional proficiency bars) used on both Home and About.
+  optional proficiency bars).
 
 ## Getting started
 
@@ -40,10 +41,27 @@ npm run preview
 
 ## Configuration
 
-- **Content** lives in `src/data/` — `projects.js`, `skills.js`, `experiences.js`.
+- **Content** lives in `src/data/` — `profile.js` (name, contact, socials, CV
+  link, summary, bio, interests), `projects.js`, `skills.js`, `experiences.js`
+  (+ `education`), `certificates.js`.
+- **Certificates**: edit `src/data/certificates.js`. Optional images go in
+  `public/certificates/` referenced as `/certificates/<file>`; `url` is the
+  credential verification link.
+- **CV download**: put the PDF at `public/CV-Ahmad-Jaenal-Aripin.pdf` (the path
+  set in `src/data/profile.js` → `cvUrl`).
 - **Contact form**: create a free key at <https://web3forms.com> and set
   `ACCESS_KEY` in `src/components/ContactForm.jsx`. Without a key the form runs in
   demo mode (no message is sent).
+- **Project covers** currently use a shared placeholder image — replace
+  `media.cover` per project in `src/data/projects.js` with real screenshots.
+- **Hero carousel** shows the Safe Keyboard app. Screenshots live in
+  `public/safe-keyboard/` (`frame_*_screen.png`); slides and captions are defined
+  in `src/components/home/HeroCarousel.jsx`.
+- **Google Play links**: set `links.playStore` on a project in
+  `src/data/projects.js` to a real URL and the Play Store button turns live
+  everywhere (hero carousel, project card, project detail). While empty, projects
+  flagged `playStoreComingSoon: true` show a disabled "Coming soon on Google
+  Play" button instead.
 
 ## Project structure
 
@@ -59,7 +77,7 @@ src/
 │   ├── Skills / ProjectCard / Cta / ExperienceTimeline / ContactForm
 │   ├── home/               # Hero, FeaturedProjects
 │   └── ui/                 # Container, Button, SectionHead
-└── pages/                  # Home, About, Portfolio, ProjectDetail, Contact, NotFound
+└── pages/                  # Home, Portfolio, ProjectDetail, Contact, NotFound
 ```
 
 ## Deployment

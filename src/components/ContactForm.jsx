@@ -20,7 +20,7 @@ export default function ContactForm() {
       setStatus({
         state: "success",
         message:
-          "Thanks! (Demo mode — add a Web3Forms access key to deliver messages.)",
+          "Thanks! (Demo mode. Add a Web3Forms access key to deliver messages.)",
       });
       form.reset();
       return;

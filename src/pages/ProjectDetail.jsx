@@ -48,10 +48,14 @@ export default function ProjectDetail() {
 
   if (!project) return <Navigate to="/portfolio" replace />;
 
+  const playStoreLive = Boolean(
+    project.links.playStore && project.links.playStore !== "#"
+  );
+
   const links = [
-    project.links.playStore && {
+    playStoreLive && {
       href: project.links.playStore,
-      label: "Play Store",
+      label: "Get it on Google Play",
       Icon: BiLogoPlayStore,
     },
     project.links.github && {
@@ -90,13 +94,27 @@ export default function ProjectDetail() {
         </p>
       </header>
 
-      <div className="mt-10 overflow-hidden rounded-3xl border border-slate-200 dark:border-[#262626]">
-        <img
-          src={project.media.cover}
-          alt={project.title}
-          className="h-[280px] w-full object-cover md:h-[420px]"
-        />
-      </div>
+      {project.media.screenshots?.length ? (
+        <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
+          {project.media.screenshots.map((shot, i) => (
+            <img
+              key={shot}
+              src={shot}
+              alt={`${project.title} screenshot ${i + 1}`}
+              loading={i === 0 ? "eager" : "lazy"}
+              className="h-[460px] w-auto shrink-0 snap-center rounded-3xl border border-slate-200 object-contain shadow-xl dark:border-[#262626]"
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-10 overflow-hidden rounded-3xl border border-slate-200 dark:border-[#262626]">
+          <img
+            src={project.media.cover}
+            alt={project.title}
+            className="h-[280px] w-full object-cover md:h-[420px]"
+          />
+        </div>
+      )}
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <MetaItem label="Company" value={project.company} />
@@ -136,8 +154,16 @@ export default function ProjectDetail() {
           <h3 className="mb-5 text-lg font-semibold text-slate-900 dark:text-white">
             Links
           </h3>
-          {links.length ? (
+          {links.length || project.playStoreComingSoon ? (
             <div className="flex flex-wrap gap-3">
+              {!playStoreLive && project.playStoreComingSoon && (
+                <span
+                  title="Coming soon to Google Play"
+                  className="inline-flex cursor-default items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white opacity-60 dark:bg-white dark:text-slate-900">
+                  <BiLogoPlayStore className="h-4 w-4" />
+                  Coming soon on Google Play
+                </span>
+              )}
               {links.map(({ href, label, Icon }) => (
                 <a
                   key={label}
@@ -152,8 +178,7 @@ export default function ProjectDetail() {
             </div>
           ) : (
             <p className="text-sm text-slate-500 dark:text-slate-400">
-              This is an internal enterprise application and is not publicly
-              available.
+              Links for this project will be added soon.
             </p>
           )}
         </div>

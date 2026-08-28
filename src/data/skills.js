@@ -4,64 +4,68 @@ import {
   BiCubeAlt,
   BiData,
   BiPlug,
+  BiGitBranch,
+  BiTask,
   BiRocket,
+  BiCodeCurly,
 } from "react-icons/bi";
 import {
   SiFlutter,
   SiDart,
   SiFirebase,
   SiMysql,
+  SiSupabase,
   SiPostman,
+  SiSentry,
   SiGit,
   SiGithub,
   SiGitlab,
-  SiKotlin,
-  SiSwagger,
+  SiLaravel,
 } from "react-icons/si";
 
 // Capability cards shown on the Skills section (home) and About page.
 export const capabilities = [
   {
-    title: "App Development",
-    category: "Mobile",
+    title: "Mobile App Development",
+    category: "Flutter & Dart",
     description:
-      "Building high-performance and responsive cross-platform applications using the Flutter framework and Dart programming language.",
+      "Building and maintaining cross-platform mobile applications with Flutter and Dart, translating UI/UX designs into functional, responsive interfaces.",
     Icon: BiMobileAlt,
   },
   {
     title: "State Management",
     category: "Architecture",
     description:
-      "Managing application state efficiently and scalably using modern reactive approaches such as BLoC, GetX, and Provider.",
+      "Managing application state with BLoC, Provider, and GetX to keep Flutter apps scalable and maintainable.",
     Icon: BiLayer,
   },
   {
-    title: "Software Design",
+    title: "Clean Architecture & OOP",
     category: "Architecture",
     description:
-      "Implementing OOP principles, Clean Code Architecture, MVVM, and Modular architecture to create clean, maintainable, and scalable codebases.",
+      "Applying Object-Oriented Programming principles together with Clean Architecture, MVC, and MVVM patterns.",
     Icon: BiCubeAlt,
   },
   {
-    title: "Backend & Cloud Services",
+    title: "Firebase, Backend & Storage",
     category: "BaaS & Database",
     description:
-      "Seamlessly integrating backend services using MySQL and the Firebase ecosystem (Authentication, Storage, Cloud Messaging, Crashlytics, Analytics).",
+      "Integrating Firebase (Authentication, Cloud Messaging, Storage, Crashlytics, Analytics), MySQL, and Supabase, with local storage via SQLite, SharedPreferences, and Hive.",
     Icon: BiData,
   },
   {
     title: "API Integration",
     category: "Networking",
     description:
-      "Designing, testing, and documenting RESTful API integrations quickly and accurately using testing tools like Postman and Swagger.",
+      "Consuming and testing RESTful APIs with JSON, using Postman for API testing and Sentry for monitoring and error tracking.",
     Icon: BiPlug,
   },
   {
     title: "DevOps & Version Control",
     category: "CI/CD & Version Control",
     description:
-      "Managing code versions with GitHub/GitLab, and automating application testing and distribution workflows using Codemagic and GitHub Actions.",
-    Icon: BiRocket,
+      "Version control with GitHub and GitLab, issue tracking through Jira, and automated builds with Codemagic.",
+    Icon: BiGitBranch,
   },
 ];
 
@@ -69,22 +73,30 @@ export const capabilities = [
 export const techStack = [
   { name: "Flutter", Icon: SiFlutter },
   { name: "Dart", Icon: SiDart },
-  { name: "Kotlin", Icon: SiKotlin },
+  { name: "GetX", Icon: BiLayer },
+  { name: "BLoC", Icon: BiLayer },
+  { name: "Provider", Icon: BiLayer },
   { name: "Firebase", Icon: SiFirebase },
   { name: "MySQL", Icon: SiMysql },
+  { name: "Supabase", Icon: SiSupabase },
+  { name: "REST API", Icon: BiPlug },
+  { name: "JSON", Icon: BiCodeCurly },
   { name: "Postman", Icon: SiPostman },
-  { name: "Swagger", Icon: SiSwagger },
+  { name: "Sentry", Icon: SiSentry },
   { name: "Git", Icon: SiGit },
   { name: "GitHub", Icon: SiGithub },
   { name: "GitLab", Icon: SiGitlab },
+  { name: "Laravel", Icon: SiLaravel },
+  { name: "Jira", Icon: BiTask },
+  { name: "Codemagic", Icon: BiRocket },
 ];
 
 // Proficiency bars.
 export const proficiencies = [
-  { name: "Flutter & Dart", level: 92 },
-  { name: "State Management (BLoC / GetX / Provider)", level: 88 },
-  { name: "REST API & Networking", level: 90 },
+  { name: "Flutter & Dart", level: 90 },
+  { name: "State Management (BLoC / Provider / GetX)", level: 85 },
+  { name: "REST API & JSON", level: 88 },
   { name: "Firebase Ecosystem", level: 85 },
-  { name: "Clean Architecture & MVVM", level: 82 },
-  { name: "CI/CD (Codemagic / GitHub Actions)", level: 75 },
+  { name: "Clean Architecture (MVC / MVVM)", level: 80 },
+  { name: "Local Storage (SQLite / Hive / SharedPreferences)", level: 82 },
 ];
