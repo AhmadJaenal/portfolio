@@ -3,30 +3,30 @@ import { Link } from "react-router-dom";
 import { BiChevronLeft, BiChevronRight, BiLogoPlayStore } from "react-icons/bi";
 import { getProject } from "@data/projects.js";
 
-// Screenshots of the Safe Keyboard app (files in `public/safe-keyboard/`).
+// Screenshots of the Safe Keyboard app (files in `public/images/safe-keyboard/`).
 const slides = [
   {
-    src: "/safe-keyboard/frame_blockedword_screen.png",
+    src: "/images/safe-keyboard/frame_blockedword_screen.png",
     name: "Blocked Words",
     caption:
       "A personal dictionary of words to block, with a free quota and upgrade tiers.",
     alt: "Safe Keyboard Blocked Words dictionary screen",
   },
   {
-    src: "/safe-keyboard/frame_pin_screen.png",
+    src: "/images/safe-keyboard/frame_pin_screen.png",
     name: "Parent Mode",
     caption: "Settings locked behind a 6-digit PIN so kids can't change the filter.",
     alt: "Safe Keyboard Parent Mode PIN screen",
   },
   {
-    src: "/safe-keyboard/frame_keyboard_screen.png",
+    src: "/images/safe-keyboard/frame_keyboard_screen.png",
     name: "Live Filtering",
     caption:
       "Inappropriate words are caught and removed as you type, anywhere on the phone.",
     alt: "Safe Keyboard live word filtering while typing",
   },
   {
-    src: "/safe-keyboard/frame_setting_screen.png",
+    src: "/images/safe-keyboard/frame_setting_screen.png",
     name: "Keyboard Settings",
     caption:
       "Filter levels, language dictionary, themes, and haptic feedback in one place.",
@@ -39,7 +39,11 @@ const INTERVAL = 4500;
 export default function HeroCarousel() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [loaded, setLoaded] = useState(() => new Set());
   const touchStartX = useRef(null);
+
+  const markLoaded = (i) =>
+    setLoaded((s) => (s.has(i) ? s : new Set(s).add(i)));
 
   const go = useCallback(
     (next) => setIndex((i) => (next + slides.length) % slides.length),
@@ -84,6 +88,12 @@ export default function HeroCarousel() {
         className="relative h-[470px] md:h-[510px]"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}>
+        {!loaded.has(index) && (
+          <span
+            aria-hidden="true"
+            className="shimmer absolute inset-y-0 left-1/2 z-10 w-[232px] -translate-x-1/2 rounded-[2rem]"
+          />
+        )}
         {slides.map((slide, i) => (
           <img
             key={slide.src}
@@ -91,6 +101,7 @@ export default function HeroCarousel() {
             alt={slide.alt}
             loading={i === 0 ? "eager" : "lazy"}
             aria-hidden={i !== index}
+            onLoad={() => markLoaded(i)}
             className={`absolute inset-0 mx-auto h-full w-auto object-contain drop-shadow-2xl transition-opacity duration-700 ${
               i === index ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
@@ -101,14 +112,14 @@ export default function HeroCarousel() {
           type="button"
           aria-label="Previous screenshot"
           onClick={() => go(index - 1)}
-          className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-200 bg-white p-2 text-slate-700 shadow-md transition hover:text-accent dark:border-[#262626] dark:bg-[#121212] dark:text-slate-200">
+          className="absolute left-0 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-200 bg-white p-2 text-slate-700 shadow-md transition hover:text-accent dark:border-[#262626] dark:bg-[#121212] dark:text-slate-200">
           <BiChevronLeft className="h-5 w-5" />
         </button>
         <button
           type="button"
           aria-label="Next screenshot"
           onClick={() => go(index + 1)}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rounded-full border border-slate-200 bg-white p-2 text-slate-700 shadow-md transition hover:text-accent dark:border-[#262626] dark:bg-[#121212] dark:text-slate-200">
+          className="absolute right-0 top-1/2 z-20 -translate-y-1/2 translate-x-1/2 rounded-full border border-slate-200 bg-white p-2 text-slate-700 shadow-md transition hover:text-accent dark:border-[#262626] dark:bg-[#121212] dark:text-slate-200">
           <BiChevronRight className="h-5 w-5" />
         </button>
       </div>

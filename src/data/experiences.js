@@ -3,7 +3,7 @@ export const experiences = [
     company: "PT. Ragdalion Revolusi Industri",
     position: "Mobile Developer",
     type: "Internship, 6 months",
-    period: "2025",
+    period: "Dec 2025 to Jun 2026",
     description:
       "Developed and maintained cross-platform mobile applications using Flutter and GetX. Collaborated with the QA team through Jira to identify and resolve issues. Contributed to Cerol v5 and Sikomo, and refactored the codebase and implemented new features and REST API integrations for Andon Calling.",
   },

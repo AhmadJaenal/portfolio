@@ -29,6 +29,10 @@ full light/dark mode.
   `prefers-color-scheme`, and applied before first paint (no flash).
 - **Skills** — reusable `<Skills />` section (capability cards + tech stack,
   optional proficiency bars).
+- **Image loading** — `<ShimmerImage />` (`src/components/ui/`) shows an animated
+  skeleton shimmer until each image loads, then fades it in. Used for project
+  covers, the project-detail gallery, and certificate scans; the hero carousel
+  has its own inline shimmer. Respects `prefers-reduced-motion`.
 
 ## Getting started
 
@@ -44,9 +48,12 @@ npm run preview
 - **Content** lives in `src/data/` — `profile.js` (name, contact, socials, CV
   link, summary, bio, interests), `projects.js`, `skills.js`, `experiences.js`
   (+ `education`), `certificates.js`.
-- **Certificates**: edit `src/data/certificates.js`. Optional images go in
-  `public/certificates/` referenced as `/certificates/<file>`; `url` is the
-  credential verification link.
+- **Certificates**: edit `src/data/certificates.js`. Scans live in
+  `public/images/certificates/` (spaces in file names are written as `%20` in
+  the data file); `url` is the verification link and falls back to the scan.
+- **Project & app images** live under `public/images/<project>/` and are
+  referenced as `/images/<project>/<file>` in `src/data/projects.js` and
+  `src/components/home/HeroCarousel.jsx`.
 - **CV download**: put the PDF at `public/CV-Ahmad-Jaenal-Aripin.pdf` (the path
   set in `src/data/profile.js` → `cvUrl`).
 - **Contact form**: create a free key at <https://web3forms.com> and set

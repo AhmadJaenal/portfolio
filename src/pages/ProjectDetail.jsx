@@ -7,6 +7,7 @@ import {
   BiLogoPlayStore,
 } from "react-icons/bi";
 import Container from "@components/ui/Container.jsx";
+import ShimmerImage from "@components/ui/ShimmerImage.jsx";
 import { getProject } from "@data/projects.js";
 
 function MetaItem({ label, value }) {
@@ -97,21 +98,24 @@ export default function ProjectDetail() {
       {project.media.screenshots?.length ? (
         <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
           {project.media.screenshots.map((shot, i) => (
-            <img
+            <div
               key={shot}
-              src={shot}
-              alt={`${project.title} screenshot ${i + 1}`}
-              loading={i === 0 ? "eager" : "lazy"}
-              className="h-[460px] w-auto shrink-0 snap-center rounded-3xl border border-slate-200 object-contain shadow-xl dark:border-[#262626]"
-            />
+              className="relative h-[460px] w-[224px] shrink-0 snap-center overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-xl dark:border-[#262626] dark:bg-[#121212]">
+              <ShimmerImage
+                src={shot}
+                alt={`${project.title} screenshot ${i + 1}`}
+                loading={i === 0 ? "eager" : "lazy"}
+                className="h-full w-full object-contain"
+              />
+            </div>
           ))}
         </div>
       ) : (
-        <div className="mt-10 overflow-hidden rounded-3xl border border-slate-200 dark:border-[#262626]">
-          <img
+        <div className="relative mt-10 h-[280px] overflow-hidden rounded-3xl border border-slate-200 md:h-[420px] dark:border-[#262626]">
+          <ShimmerImage
             src={project.media.cover}
             alt={project.title}
-            className="h-[280px] w-full object-cover md:h-[420px]"
+            className="h-full w-full object-cover"
           />
         </div>
       )}

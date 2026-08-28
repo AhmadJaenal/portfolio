@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { BiRightArrowAlt, BiLogoPlayStore } from "react-icons/bi";
+import ShimmerImage from "./ui/ShimmerImage.jsx";
 
 export default function ProjectCard({ project }) {
   const framed = Boolean(project.media.screenshots?.length);
@@ -14,20 +15,19 @@ export default function ProjectCard({ project }) {
           className={`absolute inset-0 overflow-hidden rounded-2xl border border-slate-200 dark:border-[#262626] ${
             framed ? "bg-slate-100 dark:bg-[#121212]" : ""
           }`}>
-          <img
+          <ShimmerImage
             src={project.media.cover}
             alt={project.title}
-            className={`h-full w-full transition-transform duration-500 hover:scale-105 ${
-              framed
-                ? "object-contain object-top pt-4"
-                : "object-cover"
+            loading="lazy"
+            className={`h-full w-full hover:scale-105 ${
+              framed ? "object-contain object-top pt-4" : "object-cover"
             }`}
           />
           {!framed && (
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           )}
           <span
-            className="absolute left-4 top-4 inline-flex rounded-full px-3 py-1 text-xs font-medium text-white"
+            className="absolute left-4 top-4 z-20 inline-flex rounded-full px-3 py-1 text-xs font-medium text-white"
             style={{ backgroundColor: project.themeColor }}>
             {project.category}
           </span>
