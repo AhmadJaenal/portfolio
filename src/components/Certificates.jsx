@@ -1,11 +1,33 @@
 import { BiCertification, BiLinkExternal } from "react-icons/bi";
 import SectionHead from "./ui/SectionHead.jsx";
 import ShimmerImage from "./ui/ShimmerImage.jsx";
-import { certificates } from "@data/certificates.js";
+import {
+  certificates,
+  certificateGroups,
+  levelRank,
+} from "@data/certificates.js";
 
-function CertificateCard({ title, issuer, date, credentialId, url, image, skills }) {
-  const isLinked = url && url !== "#";
+const LEVEL_STYLE = {
+  4: "bg-accent text-white",
+  3: "bg-accent/80 text-white",
+  2: "bg-accent/15 text-accent",
+  1: "bg-slate-100 text-slate-500 dark:bg-[#1a1a1a] dark:text-slate-400",
+};
+
+function LevelBadge({ level }) {
+  const rank = levelRank[level] ?? 0;
+  if (!level || rank === 0) return null;
+  return (
+    <span
+      className={`absolute right-3 top-3 z-20 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ${LEVEL_STYLE[rank]}`}>
+      {level}
+    </span>
+  );
+}
+
+function CertificateCard({ title, issuer, date, credentialId, url, image, skills, level }) {
   const preview = image || url;
+  const isLinked = url && url !== "#";
   return (
     <article className="surface-card flex flex-col overflow-hidden">
       <a
@@ -13,6 +35,7 @@ function CertificateCard({ title, issuer, date, credentialId, url, image, skills
         target={preview ? "_blank" : undefined}
         rel="noopener noreferrer"
         className="group relative flex h-44 items-center justify-center overflow-hidden border-b border-slate-200 bg-slate-50 dark:border-[#262626] dark:bg-[#121212]">
+        <LevelBadge level={level} />
         {preview ? (
           <ShimmerImage
             src={preview}
@@ -70,6 +93,21 @@ function CertificateCard({ title, issuer, date, credentialId, url, image, skills
 export default function Certificates({ id, className = "" }) {
   if (!certificates.length) return null;
 
+  const year = (d) => parseInt(String(d).match(/\d{4}/)?.[0] ?? "0", 10);
+
+  const groups = certificateGroups
+    .map((name) => ({
+      name,
+      items: certificates
+        .filter((c) => c.group === name)
+        .sort(
+          (a, b) =>
+            (levelRank[b.level] ?? 0) - (levelRank[a.level] ?? 0) ||
+            year(b.date) - year(a.date)
+        ),
+    }))
+    .filter((g) => g.items.length);
+
   return (
     <section id={id} className={className}>
       <SectionHead
@@ -79,12 +117,26 @@ export default function Certificates({ id, className = "" }) {
             Courses &amp; <span className="text-accent">Credentials</span>
           </>
         }
-        desc="National competency certification, developer scholarships, and structured courses in Flutter, Dart, and software architecture. Click a certificate to view the full scan."
+        desc="Grouped by focus and tier, mobile development first. Click any certificate to view the full scan."
       />
 
-      <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        {certificates.map((cert) => (
-          <CertificateCard key={cert.title} {...cert} />
+      <div className="mt-16 space-y-16">
+        {groups.map((group) => (
+          <div key={group.name}>
+            <div className="flex items-center gap-4">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                {group.name}
+              </h3>
+              <span className="text-sm text-slate-400">{group.items.length}</span>
+              <span className="h-px flex-1 bg-slate-200 dark:bg-[#262626]" />
+            </div>
+
+            <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {group.items.map((cert) => (
+                <CertificateCard key={cert.title} {...cert} />
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </section>

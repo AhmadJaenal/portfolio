@@ -51,6 +51,10 @@ npm run preview
 - **Certificates**: edit `src/data/certificates.js`. Scans live in
   `public/images/certificates/` (spaces in file names are written as `%20` in
   the data file); `url` is the verification link and falls back to the scan.
+  Each entry has a `group` (`certificateGroups` sets the display order, mobile
+  development first) and a `level` (`Expert` > `Advanced`/`Certified` >
+  `Intermediate` > `Fundamental`) that sorts cards within a group and colours the
+  badge.
 - **Project & app images** live under `public/images/<project>/` and are
   referenced as `/images/<project>/<file>` in `src/data/projects.js` and
   `src/components/home/HeroCarousel.jsx`.
