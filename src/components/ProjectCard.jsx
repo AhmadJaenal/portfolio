@@ -1,13 +1,43 @@
 import { Link } from "react-router-dom";
-import { BiRightArrowAlt, BiLogoPlayStore } from "react-icons/bi";
+import {
+  BiRightArrowAlt,
+  BiLogoPlayStore,
+  BiLogoGithub,
+  BiLogoGitlab,
+} from "react-icons/bi";
 import ShimmerImage from "./ui/ShimmerImage.jsx";
 
 export default function ProjectCard({ project }) {
   const framed = Boolean(project.media.screenshots?.length);
-  const playStoreLive = Boolean(
-    project.links?.playStore && project.links.playStore !== "#"
-  );
-  const showPlayStore = playStoreLive || project.playStoreComingSoon;
+  const links = project.links ?? {};
+  const playStoreLive = Boolean(links.playStore && links.playStore !== "#");
+
+  const badges = [
+    playStoreLive && {
+      href: links.playStore,
+      label: "Play Store",
+      title: "Get it on Google Play",
+      Icon: BiLogoPlayStore,
+    },
+    !playStoreLive &&
+      project.playStoreComingSoon && {
+        label: "Soon",
+        title: "Coming soon to Google Play",
+        Icon: BiLogoPlayStore,
+      },
+    links.github && {
+      href: links.github,
+      label: "GitHub",
+      title: "View source on GitHub",
+      Icon: BiLogoGithub,
+    },
+    links.gitlab && {
+      href: links.gitlab,
+      label: "GitLab",
+      title: "View source on GitLab",
+      Icon: BiLogoGitlab,
+    },
+  ].filter(Boolean);
   return (
     <div className="surface-card mx-auto flex w-full flex-col p-6 md:p-8">
       <div className="relative mb-14 h-64 w-full md:h-80">
@@ -43,31 +73,37 @@ export default function ProjectCard({ project }) {
       </div>
 
       <div className="flex flex-grow flex-col px-1 pb-1">
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="text-xl font-bold leading-snug tracking-wide text-slate-900 dark:text-white">
-            {project.title}
-          </h3>
-          {showPlayStore &&
-            (playStoreLive ? (
-              <a
-                href={project.links.playStore}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Get it on Google Play"
-                className="mt-1 inline-flex shrink-0 items-center gap-1 rounded-full bg-slate-900 px-2.5 py-1 text-xs font-medium text-white dark:bg-white dark:text-slate-900">
-                <BiLogoPlayStore className="h-3.5 w-3.5" />
-                Play Store
-              </a>
-            ) : (
-              <span
-                title="Coming soon to Google Play"
-                className="mt-1 inline-flex shrink-0 items-center gap-1 rounded-full border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-400 dark:border-[#262626]">
-                <BiLogoPlayStore className="h-3.5 w-3.5" />
-                Soon
-              </span>
-            ))}
-        </div>
+        <h3 className="text-xl font-bold leading-snug tracking-wide text-slate-900 dark:text-white">
+          {project.title}
+        </h3>
         <p className="mt-2 text-sm text-slate-400">{project.company}</p>
+
+        {badges.length ? (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {badges.map(({ href, label, title, Icon }) =>
+              href ? (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={title}
+                  className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-700 transition-colors hover:border-accent hover:text-accent dark:border-[#262626] dark:text-slate-200">
+                  <Icon className="h-3.5 w-3.5" />
+                  {label}
+                </a>
+              ) : (
+                <span
+                  key={label}
+                  title={title}
+                  className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-400 dark:border-[#262626]">
+                  <Icon className="h-3.5 w-3.5" />
+                  {label}
+                </span>
+              )
+            )}
+          </div>
+        ) : null}
 
         <div className="my-6 flex flex-wrap items-center justify-between gap-3 text-[15px] text-slate-500 dark:text-slate-300">
           <p>{project.category}</p>

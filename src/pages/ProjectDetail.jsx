@@ -4,6 +4,7 @@ import {
   BiCheck,
   BiLinkExternal,
   BiLogoGithub,
+  BiLogoGitlab,
   BiLogoPlayStore,
 } from "react-icons/bi";
 import Container from "@components/ui/Container.jsx";
@@ -63,6 +64,11 @@ export default function ProjectDetail() {
       href: project.links.github,
       label: "GitHub",
       Icon: BiLogoGithub,
+    },
+    project.links.gitlab && {
+      href: project.links.gitlab,
+      label: "GitLab",
+      Icon: BiLogoGitlab,
     },
     project.links.website && {
       href: project.links.website,

@@ -8,7 +8,8 @@ export const profile = {
   email: "ahmadjaenal629@gmail.com",
   phone: "+62 896 6377 4293",
   phoneHref: "tel:+6289663774293",
-  cvUrl: "/CV-Ahmad-Jaenal-Aripin.pdf",
+  cvUrl: "/documents/Ahmad-Jaenal-Aripin-CV.pdf",
+  cvFileName: "Ahmad-Jaenal-Aripin-CV.pdf",
   socials: {
     linkedin: "https://www.linkedin.com/in/ahmadjaenal/",
     github: "https://github.com/AhmadJaenal",

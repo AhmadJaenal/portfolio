@@ -1,4 +1,4 @@
-import { BiCertification, BiLinkExternal } from "react-icons/bi";
+import { BiCertification, BiLinkExternal, BiLogoGithub } from "react-icons/bi";
 import SectionHead from "./ui/SectionHead.jsx";
 import ShimmerImage from "./ui/ShimmerImage.jsx";
 import {
@@ -25,7 +25,7 @@ function LevelBadge({ level }) {
   );
 }
 
-function CertificateCard({ title, issuer, date, credentialId, url, image, skills, level }) {
+function CertificateCard({ title, issuer, date, credentialId, url, repo, image, skills, level }) {
   const preview = image || url;
   const isLinked = url && url !== "#";
   return (
@@ -72,7 +72,7 @@ function CertificateCard({ title, issuer, date, credentialId, url, image, skills
           </div>
         ) : null}
 
-        <div className="mt-auto pt-5">
+        <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-5">
           {isLinked ? (
             <a
               href={url}
@@ -84,6 +84,15 @@ function CertificateCard({ title, issuer, date, credentialId, url, image, skills
           ) : (
             <span className="text-sm text-slate-400">Credential on request</span>
           )}
+          {repo ? (
+            <a
+              href={repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-accent dark:text-slate-400">
+              Source code <BiLogoGithub className="h-4 w-4" />
+            </a>
+          ) : null}
         </div>
       </div>
     </article>

@@ -1,8 +1,12 @@
 import { useState } from "react";
 import Button from "./ui/Button.jsx";
 
-// Create a free access key at https://web3forms.com and paste it below.
-const ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+// Create a free access key at https://web3forms.com (it is sent to your inbox),
+// then put it in a `.env` file as:  VITE_WEB3FORMS_KEY=your-key
+// You can also hard-code it in FALLBACK_KEY below — the Web3Forms key is a
+// public client-side key by design.
+const FALLBACK_KEY = "";
+const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || FALLBACK_KEY;
 
 const inputClass =
   "w-full rounded-md border-2 border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-accent focus:ring-4 focus:ring-accent/10 dark:border-[#262626] dark:bg-[#121212] dark:text-slate-100";
@@ -16,13 +20,12 @@ export default function ContactForm() {
     const data = Object.fromEntries(new FormData(form));
     setStatus({ state: "loading", message: "Sending..." });
 
-    if (!ACCESS_KEY || ACCESS_KEY === "YOUR_ACCESS_KEY_HERE") {
+    if (!ACCESS_KEY) {
       setStatus({
-        state: "success",
+        state: "error",
         message:
-          "Thanks! (Demo mode. Add a Web3Forms access key to deliver messages.)",
+          "Contact form is not configured yet (missing Web3Forms key). Email me directly instead.",
       });
-      form.reset();
       return;
     }
 
@@ -33,7 +36,12 @@ export default function ContactForm() {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({ access_key: ACCESS_KEY, ...data }),
+        body: JSON.stringify({
+          access_key: ACCESS_KEY,
+          subject: `Portfolio contact from ${data.name || "someone"}`,
+          from_name: "Portfolio Contact Form",
+          ...data,
+        }),
       });
       const json = await res.json();
       if (res.ok) {

@@ -46,7 +46,10 @@ export default function AboutMe({ id, showActions = true, className = "" }) {
 
           {showActions && (
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button href={profile.cvUrl} target="_blank" rel="noopener">
+              <Button
+                href={profile.cvUrl}
+                download={profile.cvFileName}
+                rel="noopener">
                 <BiCloudDownload className="h-5 w-5" />
                 Download CV
               </Button>

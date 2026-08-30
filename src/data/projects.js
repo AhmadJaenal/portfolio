@@ -57,11 +57,10 @@ export const projects = [
     date: "2025",
     company: "PT. Ragdalion Revolusi Industri",
     role: "Mobile Developer (Intern)",
-    status: "Undergoing Google Play Store publishing",
+    status: "Published on Google Play Store",
     themeColor: "#FF7A3D",
     featured: true,
     order: 1,
-    playStoreComingSoon: true,
     media: {
       cover: "/images/arp/frame_schedule_progress.png",
       screenshots: [
@@ -78,9 +77,14 @@ export const projects = [
       ],
       demo: "",
     },
-    links: { playStore: "", github: "", website: "" },
+    links: {
+      playStore:
+        "https://play.google.com/store/apps/details?id=com.ragdalion.lppom_audit_resource_planning&hl=id",
+      github: "",
+      website: "",
+    },
     description:
-      "Cross-platform mobile application built and maintained with Flutter and GetX. Currently undergoing Google Play Store publishing.",
+      "Cross-platform mobile application built and maintained with Flutter and GetX, published on the Google Play Store.",
     tasks: [
       "Developed and maintained app features with Flutter & GetX",
       "Translated UI/UX designs into functional, responsive screens",
@@ -109,7 +113,6 @@ export const projects = [
     themeColor: "#00A86B",
     featured: true,
     order: 2,
-    playStoreComingSoon: true,
     media: {
       cover: "/images/sikomo/frame_permohonan_maternity.png",
       screenshots: [
@@ -126,7 +129,11 @@ export const projects = [
       ],
       demo: "",
     },
-    links: { playStore: "", github: "", website: "" },
+    links: {
+      playStore: "https://play.google.com/store/search?q=sikomo&c=apps&hl=id",
+      github: "",
+      website: "",
+    },
     description:
       "Cross-platform mobile application developed and maintained with Flutter and GetX, published on the Google Play Store.",
     tasks: [
@@ -199,7 +206,12 @@ export const projects = [
     featured: false,
     order: 4,
     media: { cover: PLACEHOLDER_COVER, screenshots: [], demo: "" },
-    links: { playStore: "", github: "", website: "" },
+    links: {
+      playStore: "",
+      github: "",
+      gitlab: "https://gitlab.com/ahmadjaenal629/jasmani-ku",
+      website: "",
+    },
     description:
       "Application for monitoring the daily physical activities of elementary school students, built with Flutter and the BLoC pattern, backed by Firebase and a Laravel REST API.",
     tasks: [

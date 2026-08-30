@@ -33,6 +33,7 @@ export const certificates = [
     credentialId: "81P2O0LQOZOY",
     image: `${DIR}/Dicoding%20Flutter%20Expert.png`,
     url: "https://www.dicoding.com/certificates/81P2O0LQOZOY",
+    repo: "https://github.com/AhmadJaenal/dicoding_project",
     skills: ["Clean Architecture", "TDD", "CI/CD", "Modularization"],
   },
   {

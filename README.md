@@ -58,11 +58,15 @@ npm run preview
 - **Project & app images** live under `public/images/<project>/` and are
   referenced as `/images/<project>/<file>` in `src/data/projects.js` and
   `src/components/home/HeroCarousel.jsx`.
-- **CV download**: put the PDF at `public/CV-Ahmad-Jaenal-Aripin.pdf` (the path
-  set in `src/data/profile.js` → `cvUrl`).
-- **Contact form**: create a free key at <https://web3forms.com> and set
-  `ACCESS_KEY` in `src/components/ContactForm.jsx`. Without a key the form runs in
-  demo mode (no message is sent).
+- **CV download**: PDF lives at `public/documents/Ahmad-Jaenal-Aripin-CV.pdf`
+  (`profile.cvUrl` / `profile.cvFileName` in `src/data/profile.js`). The button
+  uses the `download` attribute so it saves the file instead of opening it.
+- **Contact form** (Web3Forms): get a free key at <https://web3forms.com> (it is
+  emailed to you), then `cp .env.example .env` and set `VITE_WEB3FORMS_KEY`.
+  Restart `npm run dev` after adding it. Without a key the form shows a
+  "not configured" error and sends nothing. The key is a public client-side key
+  by design, so hard-coding it in `FALLBACK_KEY` (in `ContactForm.jsx`) is also
+  fine for a static deploy.
 - **Project covers** currently use a shared placeholder image — replace
   `media.cover` per project in `src/data/projects.js` with real screenshots.
 - **Hero carousel** shows the Safe Keyboard app. Screenshots live in
@@ -93,6 +97,22 @@ src/
 
 ## Deployment
 
-Any static host works. SPA deep-link fallbacks are included for Netlify
-(`public/_redirects`) and Vercel (`vercel.json`).
-# portfolio
+Any static host works — build with `npm run build`, serve `dist/`. SPA
+deep-link fallbacks are included for Netlify (`public/_redirects`), Vercel
+(`vercel.json`), and Firebase (`firebase.json`).
+
+### Firebase Hosting
+
+```bash
+# one-time
+npm i -g firebase-tools          # (already installed if `firebase --version` works)
+firebase login
+# put your project id in .firebaserc  (replace REPLACE_WITH_YOUR_FIREBASE_PROJECT_ID)
+
+# every deploy
+npm run deploy                   # = vite build && firebase deploy --only hosting
+```
+
+`firebase.json` is already set up (serves `dist/`, rewrites every route to
+`index.html`, long-cache for `/assets/**`). No need to run `firebase init`.
+Build reads `.env` locally, so set `VITE_WEB3FORMS_KEY` before deploying.
