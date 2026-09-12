@@ -1,7 +1,4 @@
 import {
-  BiMap,
-  BiEnvelope,
-  BiPhone,
   BiLogoLinkedin,
   BiLogoGithub,
 } from "react-icons/bi";
@@ -11,9 +8,6 @@ import ContactForm from "@components/ContactForm.jsx";
 import { profile } from "@data/profile.js";
 
 const details = [
-  { Icon: BiMap, text: profile.location },
-  { Icon: BiEnvelope, text: profile.email, href: `mailto:${profile.email}` },
-  { Icon: BiPhone, text: profile.phone, href: profile.phoneHref },
   {
     Icon: BiLogoLinkedin,
     text: "linkedin.com/in/ahmadjaenal",

@@ -25,16 +25,16 @@ function LevelBadge({ level }) {
   );
 }
 
-function CertificateCard({ title, issuer, date, credentialId, url, repo, image, skills, level }) {
+function CertificateCard({ title, issuer, date, url, repo, image, skills, level }) {
   const preview = image || url;
   const isLinked = url && url !== "#";
   return (
-    <article className="surface-card flex flex-col overflow-hidden">
+    <article className="surface-card flex h-full min-w-0 flex-col">
       <a
         href={preview || undefined}
         target={preview ? "_blank" : undefined}
         rel="noopener noreferrer"
-        className="group relative flex h-44 items-center justify-center overflow-hidden border-b border-slate-200 bg-slate-50 dark:border-[#262626] dark:bg-[#121212]">
+        className="group relative flex h-44 shrink-0 items-center justify-center overflow-hidden rounded-t-3xl border-b border-slate-200 bg-slate-50 dark:border-[#262626] dark:bg-[#121212]">
         <LevelBadge level={level} />
         {preview ? (
           <ShimmerImage
@@ -56,9 +56,6 @@ function CertificateCard({ title, issuer, date, credentialId, url, repo, image, 
           {title}
         </h3>
         <p className="mt-1 text-sm text-slate-400">{date}</p>
-        {credentialId ? (
-          <p className="mt-0.5 text-xs text-slate-400">{credentialId}</p>
-        ) : null}
 
         {skills?.length ? (
           <div className="mt-4 flex flex-wrap gap-2">

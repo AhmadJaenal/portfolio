@@ -1,11 +1,15 @@
+import { useEffect, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import {
   BiArrowBack,
   BiCheck,
+  BiChevronLeft,
+  BiChevronRight,
   BiLinkExternal,
   BiLogoGithub,
   BiLogoGitlab,
   BiLogoPlayStore,
+  BiX,
 } from "react-icons/bi";
 import Container from "@components/ui/Container.jsx";
 import ShimmerImage from "@components/ui/ShimmerImage.jsx";
@@ -47,8 +51,56 @@ function List({ title, items }) {
 export default function ProjectDetail() {
   const { id } = useParams();
   const project = getProject(id);
+  const screenshots = project?.media.screenshots ?? [];
+  const [activeImage, setActiveImage] = useState(null);
+  const [touchStart, setTouchStart] = useState(null);
+
+  useEffect(() => {
+    if (activeImage === null) return undefined;
+
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setActiveImage(null);
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+      document.body.style.overflow = "";
+    };
+  }, [activeImage]);
 
   if (!project) return <Navigate to="/portfolio" replace />;
+
+  const showPreviousImage = () => {
+    setActiveImage((current) =>
+      current === null
+        ? null
+        : (current - 1 + screenshots.length) % screenshots.length
+    );
+  };
+
+  const showNextImage = () => {
+    setActiveImage((current) =>
+      current === null ? null : (current + 1) % screenshots.length
+    );
+  };
+
+  const handleTouchStart = (event) => {
+    setTouchStart(event.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (event) => {
+    if (touchStart === null) return;
+
+    const distance = event.changedTouches[0].clientX - touchStart;
+    if (Math.abs(distance) > 50) {
+      if (distance > 0) showPreviousImage();
+      else showNextImage();
+    }
+    setTouchStart(null);
+  };
 
   const playStoreLive = Boolean(
     project.links.playStore && project.links.playStore !== "#"
@@ -101,19 +153,27 @@ export default function ProjectDetail() {
         </p>
       </header>
 
-      {project.media.screenshots?.length ? (
+      {screenshots.length ? (
         <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
-          {project.media.screenshots.map((shot, i) => (
-            <div
+          {screenshots.map((shot, i) => (
+            <button
+              type="button"
               key={shot}
-              className="relative h-[460px] w-[224px] shrink-0 snap-center overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-xl dark:border-[#262626] dark:bg-[#121212]">
+              onClick={() => setActiveImage(i)}
+              aria-label={`Zoom screenshot ${i + 1}`}
+              className="group relative h-[460px] w-[224px] shrink-0 snap-center overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 text-left shadow-xl transition hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent dark:border-[#262626] dark:bg-[#121212]">
               <ShimmerImage
                 src={shot}
                 alt={`${project.title} screenshot ${i + 1}`}
                 loading={i === 0 ? "eager" : "lazy"}
-                className="h-full w-full object-contain"
+                className="h-full w-full object-contain transition duration-300 group-hover:scale-105"
               />
-            </div>
+              <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 text-white opacity-0 transition group-hover:bg-black/20 group-hover:opacity-100">
+                <span className="rounded-full bg-black/60 px-3 py-2 text-xs font-medium">
+                  Click to zoom
+                </span>
+              </span>
+            </button>
           ))}
         </div>
       ) : (
@@ -123,6 +183,63 @@ export default function ProjectDetail() {
             alt={project.title}
             className="h-full w-full object-cover"
           />
+        </div>
+      )}
+
+      {activeImage !== null && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} screenshot viewer`}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm md:p-8"
+          onClick={() => setActiveImage(null)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}>
+          <button
+            type="button"
+            aria-label="Close image viewer"
+            onClick={() => setActiveImage(null)}
+            className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white md:right-8 md:top-8">
+            <BiX className="h-7 w-7" />
+          </button>
+
+          <button
+            type="button"
+            aria-label="Previous image"
+            onClick={(event) => {
+              event.stopPropagation();
+              showPreviousImage();
+            }}
+            className="absolute left-3 z-10 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white md:left-8"
+            disabled={screenshots.length < 2}>
+            <BiChevronLeft className="h-8 w-8" />
+          </button>
+
+          <div
+            className="relative flex h-[min(78vh,760px)] w-[min(88vw,1100px)] items-center justify-center"
+            onClick={(event) => event.stopPropagation()}>
+            <ShimmerImage
+              src={screenshots[activeImage]}
+              alt={`${project.title} screenshot ${activeImage + 1}`}
+              className="h-full w-full object-contain"
+              skeletonClassName="rounded-xl"
+            />
+            <p className="absolute bottom-0 rounded-full bg-black/60 px-3 py-1 text-xs text-white">
+              {activeImage + 1} / {screenshots.length}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            aria-label="Next image"
+            onClick={(event) => {
+              event.stopPropagation();
+              showNextImage();
+            }}
+            className="absolute right-3 z-10 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white md:right-8"
+            disabled={screenshots.length < 2}>
+            <BiChevronRight className="h-8 w-8" />
+          </button>
         </div>
       )}
 

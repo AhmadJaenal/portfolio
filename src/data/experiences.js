@@ -1,19 +1,19 @@
 export const experiences = [
   {
     company: "PT. Ragdalion Revolusi Industri",
-    position: "Mobile Developer",
+    position: "Mobile Developer Intern",
     type: "Internship, 6 months",
     period: "Dec 2025 to Jun 2026",
     description:
-      "Developed and maintained cross-platform mobile applications using Flutter and GetX. Collaborated with the QA team through Jira to identify and resolve issues. Contributed to Cerol v5 and Sikomo, and refactored the codebase and implemented new features and REST API integrations for Andon Calling.",
+      "Developed and maintained cross-platform mobile applications using Flutter and GetX. Implemented new features and REST API integrations, refactored existing codebases, and collaborated with QA through Jira to resolve issues. Contributed to Sikomo and Cerol v5, both published on Google Play Store, improved the Andon Calling application, and fixed bugs in Cerol ERP v5.",
   },
   {
     company: "PT. Teknologi Laskar Mulia",
-    position: "Web Developer",
+    position: "Web Developer Intern & Laravel Mentor",
     type: "Internship, 3 months",
     period: "2024",
     description:
-      "Developed a website for managing daily reports of internship participants using Laravel and Tailwind CSS.",
+      "Developed a web-based application for managing daily reports of internship participants using Laravel and Tailwind CSS. Mentored internship participants in Laravel fundamentals, project structure, and web application development, and helped troubleshoot Laravel-related issues.",
   },
 ];
 

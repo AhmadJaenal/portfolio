@@ -1,9 +1,3 @@
-// Central project data. `id` is the URL slug used at /portfolio/:id
-//
-// links.playStore: paste the real Google Play URL when the app is live
-//   e.g. "https://play.google.com/store/apps/details?id=com.safedev.keyboard"
-// playStoreComingSoon: true  -> shows a disabled "Coming soon on Google Play"
-//   button until links.playStore is filled in.
 const PLACEHOLDER_COVER =
   "https://cdn.dribbble.com/userupload/16734510/file/original-f1e2b34a8a8030e12f2a83625ecac051.png?resize=752x&vertical=center";
 
@@ -13,7 +7,7 @@ export const projects = [
     title: "Safe Keyboard",
     category: "Product",
     date: "2026",
-    company: "SafeDev Team",
+    company: "Arkela",
     role: "Creator & Mobile Developer",
     status: "Version 1.0.0",
     themeColor: "#22C55E",
@@ -32,23 +26,25 @@ export const projects = [
     },
     links: { playStore: "", github: "", website: "" },
     description:
-      "A custom keyboard app that filters inappropriate words as you type, with a PIN-protected Parent Mode, adjustable filter levels, and a personal block-word dictionary stored entirely on the device.",
+      "A custom Android keyboard app that filters inappropriate words as you type, with a PIN-protected Parent Mode, adjustable filter levels, and a personal block-word dictionary backed by Supabase.",
     tasks: [
-      "Built a system-wide custom keyboard (keyboard extension)",
+      "Built a system-wide custom keyboard (Input Method Editor) using Kotlin",
       "Implemented real-time inappropriate-word filtering while typing",
       "Designed a PIN-protected Parent Mode for settings",
       "Added a personal blocked-word dictionary with quota & upgrade tiers",
       "Built keyboard themes and haptic feedback settings",
+      "Integrated registration flow with birth date verification and age gating",
     ],
     implementations: [
-      "Custom keyboard extension",
-      "On-device local database (no server upload)",
+      "Custom keyboard (IME) built with Kotlin & Jetpack Compose",
+      "Supabase backend with Row Level Security (RLS) policies",
       "PIN authentication flow",
       "Freemium quota / upgrade logic",
       "Theming & haptics",
+      "@Serializable data classes for Supabase Kotlin SDK integration",
     ],
-    technologies: ["Flutter", "Dart", "Local Database", "Platform Channels"],
-    stateManagement: "GetX",
+    technologies: ["Kotlin", "Firebase", "Jetpack Compose", "Supabase", "Android IME"],
+    stateManagement: "Jetpack Compose State / ViewModel",
   },
   {
     id: "cerol-v5",
@@ -64,9 +60,9 @@ export const projects = [
     media: {
       cover: "/images/arp/frame_schedule_progress.png",
       screenshots: [
+        "/images/arp/frame_task.png",
         "/images/arp/frame_schedule_offer.png",
         "/images/arp/frame_schedule_progress.png",
-        "/images/arp/frame_task.png",
         "/images/arp/frame_detail.png",
         "/images/arp/frame_refund.png",
         "/images/arp/frame_reimburse.png",
@@ -284,6 +280,50 @@ export const projects = [
     ],
     technologies: ["Flutter", "Dart", "Firebase"],
     stateManagement: "setState",
+  },
+  {
+    id: "dicoding-flutter-expert",
+    title: "Ditonton",
+    category: "Academic",
+    date: "2026",
+    company: "Dicoding Indonesia",
+    role: "Flutter Developer",
+    status: "Completed",
+    themeColor: "#F59E0B",
+    featured: false,
+    order: 7,
+    media: { cover: PLACEHOLDER_COVER, screenshots: [], demo: "" },
+    links: {
+      playStore: "",
+      github: "https://github.com/AhmadJaenal/dicoding_project",
+      website: "",
+    },
+    description:
+      "A movie and serial TV catalog application built as the Flutter Developer Expert project for Dicoding Indonesia, with discovery, search, detail, recommendation, and watchlist features.",
+    tasks: [
+      "Built movie and serial TV catalog screens",
+      "Implemented now playing, popular, top rated, search, and recommendation flows",
+      "Added movie and serial TV watchlists with local persistence",
+      "Integrated Firebase Analytics and Crashlytics",
+      "Created automated unit, bloc, and widget tests",
+    ],
+    implementations: [
+      "Clean Architecture with separate data, domain, and presentation layers",
+      "Feature modularization with reusable core and serial TV packages",
+      "BLoC and Provider state management",
+      "REST API integration with local database caching",
+      "CI/CD workflow, code coverage, and SSL pinning",
+    ],
+    technologies: [
+      "Flutter",
+      "Dart",
+      "BLoC",
+      "Provider",
+      "Clean Architecture",
+      "Firebase",
+      "REST API",
+    ],
+    stateManagement: "BLoC & Provider",
   },
 ];
 
